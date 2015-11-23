@@ -45,7 +45,6 @@ int main()
 
   // 隠面消去処理を有効にする
   glEnable(GL_DEPTH_TEST);
-  glEnable(GL_CULL_FACE);
 
   // ウィンドウが開いている間くり返し描画する
   while (!window.shouldClose())
