@@ -9,6 +9,9 @@
 // ウィンドウ関連の処理
 #include "Window.h"
 
+// メッシュの列数と行数
+const auto slices(16), stacks(12);
+
 //
 // メインプログラム
 //
@@ -40,6 +43,44 @@ int main()
     return EXIT_FAILURE;
   }
 
+  // メッシュ描画用のシェーダ
+  const auto point(ggLoadShader("point.vert", "point.frag"));
+  const auto mcLoc(glGetUniformLocation(point, "mc"));
+
+  // 頂点配列オブジェクト
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  // 頂点バッファオブジェクト
+  GLuint positionBuffer;
+  glGenBuffers(1, &positionBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+
+  // この頂点バッファオブジェクトのメモリを確保する
+  const auto vertices(slices * stacks);
+  glBufferData(GL_ARRAY_BUFFER, vertices * 3 * sizeof (GLfloat), nullptr, GL_STATIC_DRAW);
+
+  // 頂点バッファオブジェクトに頂点座標値を設定する
+  const auto coord(static_cast<GLfloat (*)[3]>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+  for (auto i = 0; i < slices * stacks; ++i)
+  {
+    const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+    const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
+
+    coord[i][0] = x;
+    coord[i][1] = y;
+    coord[i][2] = 0.0f;
+  }
+  glUnmapBuffer(GL_ARRAY_BUFFER);
+
+  // この頂点バッファオブジェクトを 0 番の attribute 変数から取り出す
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(0);
+
+  // この頂点配列オブジェクトの結合を解除する
+  glBindVertexArray(0);
+
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);
 
@@ -52,7 +93,21 @@ int main()
     // 画面消去
     window.clear();
 
+    // シェーダの指定
+    glUseProgram(point);
+    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
+
+    // 描画
+    glBindVertexArray(vao);
+    glDrawArrays(GL_POINTS, 0, vertices);
+
     // バッファを入れ替える
     window.swapBuffers();
   }
+
+  // 頂点配列オブジェクトを削除する
+  glDeleteVertexArrays(1, &vao);
+
+  // 頂点バッファオブジェクトを削除する
+  glDeleteBuffers(1, &positionBuffer);
 }
