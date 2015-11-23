@@ -97,6 +97,25 @@ int main()
     // 画面消去
     window.clear();
 
+    // 頂点バッファオブジェクトに頂点座標値を設定する
+    static int frame(0);
+    const int cycle(100);
+    const float pi(3.14159265f);
+    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+    const auto coord(static_cast<GLfloat (*)[3]>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+    for (auto i = 0; i < slices * stacks; ++i)
+    {
+      const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+      const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
+      const auto r(sqrt(x * x + y * y) * 6.0f * pi);
+
+      coord[i][0] = x;
+      coord[i][1] = y;
+      coord[i][2] = sin(r - float(frame) * pi * 2.0f / float(cycle)) / (r + pi);
+    }
+    glUnmapBuffer(GL_ARRAY_BUFFER);
+    if (++frame >= cycle) frame = 0;
+
     // シェーダの指定
     glUseProgram(point);
     glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
