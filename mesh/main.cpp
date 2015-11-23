@@ -47,7 +47,6 @@ int main()
   const auto vertices(slices * stacks);
 
   // 頂点位置
-<<<<<<< HEAD
   GLfloat position[stacks][slices][3];
   for (auto j = 0; j < stacks; ++j)
   {
@@ -61,9 +60,6 @@ int main()
       position[j][i][2] = 0.0f;
     }
   }
-=======
-  GLfloat position[vertices][3];
->>>>>>> use array to calculate position
 
   // 頂点配列オブジェクト
   GLuint vao;
