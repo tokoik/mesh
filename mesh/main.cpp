@@ -10,7 +10,7 @@
 #include "Window.h"
 
 // メッシュの列数と行数
-const auto slices(16), stacks(12);
+const auto slices(160), stacks(120);
 
 //
 // メインプログラム
@@ -70,6 +70,30 @@ int main()
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(0);
 
+  // インデックスバッファオブジェクト
+  GLuint indexBuffer;
+  glGenBuffers(1, &indexBuffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+  // このインデックスバッファオブジェクトのメモリを確保する
+  const auto indexes((slices - 1) * (stacks - 1) * 2 * 3);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes * sizeof (GLuint), nullptr, GL_STATIC_DRAW);
+
+  // このインデックスバッファオブジェクトにインデックスを格納する
+  auto index(static_cast<GLuint *>(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY)));
+  for (int j = 0; j < stacks - 1; ++j)
+  {
+    for (int i = 0; i < slices - 1; ++i)
+    {
+      index[0] = slices * j + i;
+      index[1] = index[5] = index[0] + 1;
+      index[2] = index[4] = index[0] + slices;
+      index[3] = index[2] + 1;
+      index += 6;
+    }
+  }
+  glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+
   // この頂点配列オブジェクトの結合を解除する
   glBindVertexArray(0);
 
@@ -112,7 +136,7 @@ int main()
 
     // 描画
     glBindVertexArray(vao);
-    glDrawArrays(GL_POINTS, 0, vertices);
+    glDrawElements(GL_TRIANGLES, indexes, GL_UNSIGNED_INT, 0);
 
     // バッファを入れ替える
     window.swapBuffers();
