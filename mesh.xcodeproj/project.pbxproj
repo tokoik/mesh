@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7DE2E6141C0350CE00893FCB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E6131C0350CE00893FCB /* main.cpp */; };
+		7DE2E61D1C03523900893FCB /* gg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E61B1C03523900893FCB /* gg.cpp */; };
+		7DE2E6201C03524500893FCB /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E61E1C03524500893FCB /* Window.cpp */; };
+		7DE2E6221C03524B00893FCB /* libglfw3_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE2E6211C03524B00893FCB /* libglfw3_macos.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +27,13 @@
 
 /* Begin PBXFileReference section */
 		7DE2E6101C0350CE00893FCB /* mesh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mesh; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DE2E6131C0350CE00893FCB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7DE2E6131C0350CE00893FCB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7DE2E61A1C03522E00893FCB /* config.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		7DE2E61B1C03523900893FCB /* gg.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = gg.cpp; sourceTree = "<group>"; };
+		7DE2E61C1C03523900893FCB /* gg.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = gg.h; sourceTree = "<group>"; };
+		7DE2E61E1C03524500893FCB /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		7DE2E61F1C03524500893FCB /* Window.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		7DE2E6211C03524B00893FCB /* libglfw3_macos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3_macos.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE2E6221C03524B00893FCB /* libglfw3_macos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +67,13 @@
 		7DE2E6121C0350CE00893FCB /* mesh */ = {
 			isa = PBXGroup;
 			children = (
+				7DE2E61A1C03522E00893FCB /* config.h */,
 				7DE2E6131C0350CE00893FCB /* main.cpp */,
+				7DE2E61C1C03523900893FCB /* gg.h */,
+				7DE2E61B1C03523900893FCB /* gg.cpp */,
+				7DE2E61F1C03524500893FCB /* Window.h */,
+				7DE2E61E1C03524500893FCB /* Window.cpp */,
+				7DE2E6211C03524B00893FCB /* libglfw3_macos.a */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -119,6 +135,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DE2E6141C0350CE00893FCB /* main.cpp in Sources */,
+				7DE2E6201C03524500893FCB /* Window.cpp in Sources */,
+				7DE2E61D1C03523900893FCB /* gg.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +225,20 @@
 		7DE2E6181C0350CE00893FCB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mesh",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					OpenGL,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					IOKit,
+					"-framework",
+					Cocoa,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -214,6 +246,20 @@
 		7DE2E6191C0350CE00893FCB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mesh",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					OpenGL,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					IOKit,
+					"-framework",
+					Cocoa,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

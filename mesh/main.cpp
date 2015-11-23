@@ -1,15 +1,59 @@
 //
-//  main.cpp
-//  mesh
-//
-//  Created by ã“ã†ã¸ã„ on 2015/11/23.
-//  Copyright Â© 2015å¹´ Kohe Tokoi. All rights reserved.
+// ƒƒbƒVƒ…‚ğg‚Á‚½}Œ`•`‰æ‚ÌƒTƒ“ƒvƒ‹
 //
 
+// •W€ƒ‰ƒCƒuƒ‰ƒŠ
 #include <iostream>
+#include <cmath>
 
-int main(int argc, const char * argv[]) {
-  // insert code here...
-  std::cout << "Hello, World!\n";
-    return 0;
+// ƒEƒBƒ“ƒhƒEŠÖ˜A‚Ìˆ—
+#include "Window.h"
+
+//
+// ƒƒCƒ“ƒvƒƒOƒ‰ƒ€
+//
+int main()
+{
+  // GLFW ‚ğ‰Šú‰»‚·‚é
+  if (glfwInit() == GL_FALSE)
+  {
+    // GLFW ‚Ì‰Šú‰»‚É¸”s‚µ‚½
+    std::cerr << "Failed to initialize GLFW." << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  // ƒvƒƒOƒ‰ƒ€I—¹‚É‚Í GLFW ‚ğI—¹‚·‚é
+  atexit(glfwTerminate);
+
+  // OpenGL Version 3.2 Core Profile ‚ğ‘I‘ğ‚·‚é
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+  // ƒEƒBƒ“ƒhƒE‚ğŠJ‚­
+  Window window(640, 480, "Mesh Sample");
+  if (!window.get())
+  {
+    // ƒEƒBƒ“ƒhƒE‚ªì¬‚Å‚«‚È‚©‚Á‚½
+    std::cerr << "Can't open GLFW window." << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  // ”wŒiF‚ğİ’è‚·‚é
+  glClearColor(background[0], background[1], background[2], background[3]);
+
+  // ‰B–ÊÁ‹ˆ—‚ğ—LŒø‚É‚·‚é
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+
+  // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¢‚Ä‚¢‚éŠÔ‚­‚è•Ô‚µ•`‰æ‚·‚é
+  while (!window.shouldClose())
+  {
+    // ‰æ–ÊÁ‹
+    window.clear();
+
+    // ƒoƒbƒtƒ@‚ğ“ü‚ê‘Ö‚¦‚é
+    window.swapBuffers();
+  }
 }
