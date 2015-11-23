@@ -11,17 +11,21 @@
 		7DE2E61D1C03523900893FCB /* gg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E61B1C03523900893FCB /* gg.cpp */; };
 		7DE2E6201C03524500893FCB /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E61E1C03524500893FCB /* Window.cpp */; };
 		7DE2E6221C03524B00893FCB /* libglfw3_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE2E6211C03524B00893FCB /* libglfw3_macos.a */; };
+		7DE2E6251C0353C600893FCB /* point.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DE2E6241C03538C00893FCB /* point.vert */; };
+		7DE2E6261C0353C800893FCB /* point.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DE2E6231C03538B00893FCB /* point.frag */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		7DE2E60E1C0350CE00893FCB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				7DE2E6251C0353C600893FCB /* point.vert in CopyFiles */,
+				7DE2E6261C0353C800893FCB /* point.frag in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -34,6 +38,8 @@
 		7DE2E61E1C03524500893FCB /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		7DE2E61F1C03524500893FCB /* Window.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
 		7DE2E6211C03524B00893FCB /* libglfw3_macos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3_macos.a; sourceTree = "<group>"; };
+		7DE2E6231C03538B00893FCB /* point.frag */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = point.frag; sourceTree = "<group>"; };
+		7DE2E6241C03538C00893FCB /* point.vert */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = point.vert; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,8 @@
 				7DE2E61B1C03523900893FCB /* gg.cpp */,
 				7DE2E61F1C03524500893FCB /* Window.h */,
 				7DE2E61E1C03524500893FCB /* Window.cpp */,
+				7DE2E6241C03538C00893FCB /* point.vert */,
+				7DE2E6231C03538B00893FCB /* point.frag */,
 				7DE2E6211C03524B00893FCB /* libglfw3_macos.a */,
 			);
 			path = mesh;
