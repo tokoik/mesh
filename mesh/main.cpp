@@ -148,8 +148,6 @@ int main()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof position, position);
     if (++frame >= cycle) frame = 0;
 
-<<<<<<< HEAD
-=======
     // 法線ベクトルを格納する頂点バッファオブジェクトに法線ベクトルを設定する
     for (auto j = 0; j < stacks; ++j)
     {
@@ -196,11 +194,6 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof normal, normal);
 
-    // シェーダの指定
-    glUseProgram(point);
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
-
->>>>>>> add normal
     // 描画
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indexes, GL_UNSIGNED_INT, 0);
