@@ -15,8 +15,12 @@ void main(void)
 {
   // ‹^—ƒJƒ‰[ˆ—
   float z = pv.z * 6.0 + 2.0;
+<<<<<<< 76a7c27c24abc9a372297a4126208b28388c1c12
 <<<<<<< c502872ccab055dbec7938b9b5b5ef2107d0a084
   vc = clamp(2.0 - abs(vec3(z - 4.0, z - 2.0, z)), 0.0, 1.0);
+=======
+  vc = clamp(2.0 - vec3(abs(z - 4.0), abs(z - 2.0), abs(z)), 0.0, 1.0) * nv.z;
+>>>>>>> add normal
 =======
   vc = clamp(2.0 - vec3(abs(z - 4.0), abs(z - 2.0), abs(z)), 0.0, 1.0) * nv.z;
 >>>>>>> add normal
