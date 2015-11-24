@@ -107,8 +107,7 @@ int main()
   glBindVertexArray(0);
 
   // メッシュ描画用のシェーダ
-  const auto point(ggLoadShader("point.vert", "point.frag"));
-  const auto mcLoc(glGetUniformLocation(point, "mc"));
+  GgSimpleShader simple("simple.vert", "simple.frag");
 
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);
@@ -123,8 +122,10 @@ int main()
     window.clear();
 
     // シェーダの指定
-    glUseProgram(point);
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
+    simple.use();
+    simple.setLight(light);
+    simple.setMaterial(material);
+    simple.loadMatrix(window.getMp(), window.getMv());
 
     // 頂点位置を格納する頂点バッファオブジェクトに頂点座標値を設定する
     static auto frame(0);
