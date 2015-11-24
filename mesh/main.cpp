@@ -52,7 +52,7 @@ int main()
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
 
-  // 頂点バッファオブジェクト
+  // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
   glGenBuffers(1, &positionBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
@@ -61,7 +61,7 @@ int main()
   const auto vertices(slices * stacks);
   glBufferData(GL_ARRAY_BUFFER, vertices * 3 * sizeof (GLfloat), nullptr, GL_STATIC_DRAW);
 
-  // 頂点バッファオブジェクトに頂点座標値を設定する
+  // この頂点バッファオブジェクトに頂点座標値を設定する
   const auto coord(static_cast<GLfloat (*)[3]>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
   for (auto i = 0; i < slices * stacks; ++i)
   {
