@@ -43,6 +43,7 @@ int main()
     return EXIT_FAILURE;
   }
 
+
   // ’¸“_ˆÊ’u
   GLfloat position[stacks][slices][3];
 
