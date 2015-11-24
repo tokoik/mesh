@@ -44,8 +44,7 @@ int main()
   }
 
   // メッシュ描画用のシェーダ
-  const auto point(ggLoadShader("point.vert", "point.frag"));
-  const auto mcLoc(glGetUniformLocation(point, "mc"));
+  GgSimpleShader simple("simple.vert", "simple.frag");
 
   // 頂点配列オブジェクト
   GLuint vao;
@@ -192,8 +191,10 @@ int main()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof normal, normal);
 
     // シェーダの指定
-    glUseProgram(point);
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
+    simple.use();
+    simple.setLight(light);
+    simple.setMaterial(material);
+    simple.loadMatrix(window.getMp(), window.getMv());
 
     // 描画
     glBindVertexArray(vao);
