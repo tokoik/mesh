@@ -57,6 +57,7 @@ int main()
 
   // 頂点位置
 <<<<<<< HEAD
+<<<<<<< HEAD
   GLfloat position[stacks][slices][3];
   for (auto j = 0; j < stacks; ++j)
   {
@@ -74,6 +75,9 @@ int main()
 =======
   GLfloat position[vertices][3];
 >>>>>>> use array to calculate position
+=======
+  GLfloat position[vertices][3];
+>>>>>>> 4bdf3508dbb1ccb52d2ae130945cf9458dac085e
 
   // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
