@@ -43,7 +43,6 @@ int main()
     return EXIT_FAILURE;
   }
 
-
   // 頂点位置
   GLfloat position[stacks][slices][3];
 
@@ -107,8 +106,7 @@ int main()
   glBindVertexArray(0);
 
   // メッシュ描画用のシェーダ
-  const auto point(ggLoadShader("point.vert", "point.frag"));
-  const auto mcLoc(glGetUniformLocation(point, "mc"));
+  GgSimpleShader simple("simple.vert", "simple.frag");
 
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);
