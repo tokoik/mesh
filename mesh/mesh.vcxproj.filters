@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="シェーダー ファイル">
+      <UniqueIdentifier>{501f6ee1-f1d7-44cd-94f6-0e51a4fd2ccb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -35,5 +38,13 @@
     <ClCompile Include="Window.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="point.frag">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
+    <None Include="point.vert">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
   </ItemGroup>
 </Project>
