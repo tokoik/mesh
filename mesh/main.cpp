@@ -64,12 +64,7 @@ int main()
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
 
   // この頂点バッファオブジェクトのメモリを確保する
-<<<<<<< HEAD
   glBufferData(GL_ARRAY_BUFFER, sizeof position, nullptr, GL_DYNAMIC_DRAW);
-=======
-  const auto vertices(slices * stacks);
-  glBufferData(GL_ARRAY_BUFFER, vertices * 3 * sizeof (GLfloat), nullptr, GL_DYNAMIC_DRAW);
->>>>>>> 527de1b3c0d9b3f1af1cafeff13954deec448759
 
   // この頂点バッファオブジェクトを 0 番の attribute 変数から取り出す
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
