@@ -97,7 +97,7 @@ int main()
     // 画面消去
     window.clear();
 
-    // 頂点バッファオブジェクトに頂点座標値を設定する
+    // 頂点位置を格納する頂点バッファオブジェクトに頂点座標値を設定する
     static int frame(0);
     const int cycle(100);
     const float pi(3.14159265f);
