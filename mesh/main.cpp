@@ -46,6 +46,9 @@ int main()
   // 頂点位置
   GLfloat position[stacks][slices][3];
 
+  // 法線ベクトル
+  GLfloat normal[stacks][slices][3];
+
   // 頂点配列オブジェクト
   GLuint vao;
   glGenVertexArrays(1, &vao);
@@ -63,16 +66,13 @@ int main()
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(0);
 
-  // 法線ベクトル
-  GLfloat normal[stacks][slices][3];
-
   // 法線ベクトルを格納する頂点バッファオブジェクト
   GLuint normalBuffer;
   glGenBuffers(1, &normalBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 
   // この頂点バッファオブジェクトのメモリを確保する
-  glBufferData(GL_ARRAY_BUFFER, vertices * 3 * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof normal, nullptr, GL_DYNAMIC_DRAW);
 
   // この頂点バッファオブジェクトを 1 番の attribute 変数から取り出す
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
