@@ -72,7 +72,7 @@ int main()
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
 
   // この頂点バッファオブジェクトのメモリを確保する
-  glBufferData(GL_ARRAY_BUFFER, sizeof position, position, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof position, nullptr, GL_DYNAMIC_DRAW);
 
   // この頂点バッファオブジェクトを 0 番の attribute 変数から取り出す
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -101,19 +101,18 @@ int main()
     static int frame(0);
     const int cycle(100);
     const float pi(3.14159265f);
-    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-    const auto coord(static_cast<GLfloat (*)[3]>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
     for (auto i = 0; i < slices * stacks; ++i)
     {
       const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
       const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
       const auto r(sqrt(x * x + y * y) * 6.0f * pi);
 
-      coord[i][0] = x;
-      coord[i][1] = y;
-      coord[i][2] = sin(r - float(frame) * pi * 2.0f / float(cycle)) / (r + pi);
+      position[i][0] = x;
+      position[i][1] = y;
+      position[i][2] = sin(r - float(frame) * pi * 2.0f / float(cycle)) / (r + pi);
     }
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof position, position);
     if (++frame >= cycle) frame = 0;
 
     // シェーダの指定
