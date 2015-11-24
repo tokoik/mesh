@@ -43,11 +43,16 @@ int main()
     return EXIT_FAILURE;
   }
 
+<<<<<<< HEAD
   // 頂点位置
   GLfloat position[stacks][slices][3];
 
   // 法線ベクトル
   GLfloat normal[stacks][slices][3];
+=======
+  // メッシュ描画用のシェーダ
+  GgSimpleShader simple("simple.vert", "simple.frag");
+>>>>>>> add shading
 
   // 頂点配列オブジェクト
   GLuint vao;
@@ -189,8 +194,10 @@ int main()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof normal, normal);
 
     // シェーダの指定
-    glUseProgram(point);
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
+    simple.use();
+    simple.setLight(light);
+    simple.setMaterial(material);
+    simple.loadMatrix(window.getMp(), window.getMv());
 
     // 描画
     glBindVertexArray(vao);
