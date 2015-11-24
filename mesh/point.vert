@@ -6,6 +6,7 @@ uniform mat4 mc;                                    // ƒNƒŠƒbƒsƒ“ƒOÀ•WŒn‚Ö‚Ì•ÏŠ
 
 // ’¸“_‘®«
 layout (location = 0) in vec4 pv;                   // ’¸“_ˆÊ’u
+layout (location = 1) in vec3 nv;                   // –@üƒxƒNƒgƒ‹
 
 // ’¸“_F
 out vec3 vc;
