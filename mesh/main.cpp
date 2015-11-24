@@ -70,6 +70,7 @@ int main()
       position[j][i][2] = 0.0f;
     }
   }
+
   // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
   glGenBuffers(1, &positionBuffer);
