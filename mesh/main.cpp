@@ -47,6 +47,7 @@ int main()
   const auto vertices(slices * stacks);
 
   // 頂点位置
+<<<<<<< HEAD
   GLfloat position[stacks][slices][3];
   for (auto j = 0; j < stacks; ++j)
   {
@@ -60,6 +61,9 @@ int main()
       position[j][i][2] = 0.0f;
     }
   }
+=======
+  GLfloat position[vertices][3];
+>>>>>>> use array to calculate position
 
   // 頂点配列オブジェクト
   GLuint vao;
@@ -101,19 +105,18 @@ int main()
     static int frame(0);
     const int cycle(100);
     const float pi(3.14159265f);
-    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-    const auto coord(static_cast<GLfloat (*)[3]>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
     for (auto i = 0; i < slices * stacks; ++i)
     {
       const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
       const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
       const auto r(sqrt(x * x + y * y) * 6.0f * pi);
 
-      coord[i][0] = x;
-      coord[i][1] = y;
-      coord[i][2] = sin(r - float(frame) * pi * 2.0f / float(cycle)) / (r + pi);
+      position[i][0] = x;
+      position[i][1] = y;
+      position[i][2] = sin(r - float(frame) * pi * 2.0f / float(cycle)) / (r + pi);
     }
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof position, position);
     if (++frame >= cycle) frame = 0;
 
     // シェーダの指定
