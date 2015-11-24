@@ -59,11 +59,10 @@ int main()
   GLfloat position[stacks][slices][3];
   for (auto j = 0; j < stacks; ++j)
   {
-    const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
-
     for (auto i = 0; i < slices; ++i)
     {
       const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+      const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
 
       position[j][i][0] = x;
       position[j][i][1] = y;
