@@ -52,27 +52,28 @@ int main()
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
 
+  // 頂点数
+  const auto vertices(slices * stacks);
+
+  // 頂点位置
+  GLfloat position[vertices][3];
+  for (auto i = 0; i < vertices; ++i)
+  {
+    const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+    const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
+
+    position[i][0] = x;
+    position[i][1] = y;
+    position[i][2] = 0.0f;
+  }
+
   // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
   glGenBuffers(1, &positionBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
 
   // この頂点バッファオブジェクトのメモリを確保する
-  const auto vertices(slices * stacks);
-  glBufferData(GL_ARRAY_BUFFER, vertices * 3 * sizeof (GLfloat), nullptr, GL_STATIC_DRAW);
-
-  // この頂点バッファオブジェクトに頂点座標値を設定する
-  const auto coord(static_cast<GLfloat (*)[3]>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
-  for (auto i = 0; i < slices * stacks; ++i)
-  {
-    const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
-    const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
-
-    coord[i][0] = x;
-    coord[i][1] = y;
-    coord[i][2] = 0.0f;
-  }
-  glUnmapBuffer(GL_ARRAY_BUFFER);
+  glBufferData(GL_ARRAY_BUFFER, sizeof position, position, GL_STATIC_DRAW);
 
   // この頂点バッファオブジェクトを 0 番の attribute 変数から取り出す
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
