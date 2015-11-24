@@ -147,4 +147,5 @@ int main()
 
   // 頂点バッファオブジェクトを削除する
   glDeleteBuffers(1, &positionBuffer);
+  glDeleteBuffers(1, &indexBuffer);
 }
