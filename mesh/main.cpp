@@ -43,15 +43,6 @@ int main()
     return EXIT_FAILURE;
   }
 
-  // メッシュ描画用のシェーダ
-  const auto point(ggLoadShader("point.vert", "point.frag"));
-  const auto mcLoc(glGetUniformLocation(point, "mc"));
-
-  // 頂点配列オブジェクト
-  GLuint vao;
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
-
   // 頂点数
   const auto vertices(slices * stacks);
 
@@ -70,6 +61,11 @@ int main()
     }
   }
 
+  // 頂点配列オブジェクト
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
   // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
   glGenBuffers(1, &positionBuffer);
@@ -84,6 +80,10 @@ int main()
 
   // この頂点配列オブジェクトの結合を解除する
   glBindVertexArray(0);
+
+  // メッシュ描画用のシェーダ
+  const auto point(ggLoadShader("point.vert", "point.frag"));
+  const auto mcLoc(glGetUniformLocation(point, "mc"));
 
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);
