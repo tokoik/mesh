@@ -43,9 +43,6 @@ int main()
     return EXIT_FAILURE;
   }
 
-  // í∏ì_êî
-  const auto vertices(slices * stacks);
-
   // í∏ì_à íu
   GLfloat position[stacks][slices][3];
 
