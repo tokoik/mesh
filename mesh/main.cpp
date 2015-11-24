@@ -105,7 +105,7 @@ int main()
     static int frame(0);
     const int cycle(100);
     const float pi(3.14159265f);
-    for (auto i = 0; i < slices * stacks; ++i)
+    for (auto i = 0; i < vertices; ++i)
     {
       const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
       const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
