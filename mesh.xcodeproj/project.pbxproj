@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D5E7B341C04905900C2D468 /* simple.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D5E7B331C04904C00C2D468 /* simple.vert */; };
+		7D5E7B351C04905C00C2D468 /* simple.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D5E7B321C04904C00C2D468 /* simple.frag */; };
 		7DE2E6141C0350CE00893FCB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E6131C0350CE00893FCB /* main.cpp */; };
 		7DE2E61D1C03523900893FCB /* gg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E61B1C03523900893FCB /* gg.cpp */; };
 		7DE2E6201C03524500893FCB /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2E61E1C03524500893FCB /* Window.cpp */; };
@@ -24,12 +26,16 @@
 			files = (
 				7DE2E6251C0353C600893FCB /* point.vert in CopyFiles */,
 				7DE2E6261C0353C800893FCB /* point.frag in CopyFiles */,
+				7D5E7B341C04905900C2D468 /* simple.vert in CopyFiles */,
+				7D5E7B351C04905C00C2D468 /* simple.frag in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D5E7B321C04904C00C2D468 /* simple.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = simple.frag; sourceTree = "<group>"; };
+		7D5E7B331C04904C00C2D468 /* simple.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = simple.vert; sourceTree = "<group>"; };
 		7DE2E6101C0350CE00893FCB /* mesh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mesh; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DE2E6131C0350CE00893FCB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7DE2E61A1C03522E00893FCB /* config.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -81,6 +87,8 @@
 				7DE2E61E1C03524500893FCB /* Window.cpp */,
 				7DE2E6241C03538C00893FCB /* point.vert */,
 				7DE2E6231C03538B00893FCB /* point.frag */,
+				7D5E7B331C04904C00C2D468 /* simple.vert */,
+				7D5E7B321C04904C00C2D468 /* simple.frag */,
 				7DE2E6211C03524B00893FCB /* libglfw3_macos.a */,
 			);
 			path = mesh;
@@ -291,6 +299,7 @@
 				7DE2E6191C0350CE00893FCB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
