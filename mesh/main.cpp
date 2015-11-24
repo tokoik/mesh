@@ -56,17 +56,20 @@ int main()
   const auto vertices(slices * stacks);
 
   // 頂点位置
-  GLfloat position[vertices][3];
-  for (auto i = 0; i < vertices; ++i)
+  GLfloat position[stacks][slices][3];
+  for (auto j = 0; j < stacks; ++j)
   {
-    const auto x((GLfloat(i % slices) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
-    const auto y((GLfloat(i / slices) / GLfloat(stacks - 1) - 0.5f));
+    const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
 
-    position[i][0] = x;
-    position[i][1] = y;
-    position[i][2] = 0.0f;
+    for (auto i = 0; i < slices; ++i)
+    {
+      const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+
+      position[j][i][0] = x;
+      position[j][i][1] = y;
+      position[j][i][2] = 0.0f;
+    }
   }
-
   // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
   glGenBuffers(1, &positionBuffer);
