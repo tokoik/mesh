@@ -6,6 +6,7 @@ uniform mat4 mc;                                    // ƒNƒŠƒbƒsƒ“ƒOÀ•WŒn‚Ö‚Ì•ÏŠ
 
 // ’¸“_‘®«
 layout (location = 0) in vec4 pv;                   // ’¸“_ˆÊ’u
+layout (location = 1) in vec3 nv;                   // –@üƒxƒNƒgƒ‹
 
 // ’¸“_F
 out vec3 vc;
@@ -14,7 +15,11 @@ void main(void)
 {
   // ‹^—ƒJƒ‰[ˆ—
   float z = pv.z * 6.0 + 2.0;
+<<<<<<< c502872ccab055dbec7938b9b5b5ef2107d0a084
   vc = clamp(2.0 - abs(vec3(z - 4.0, z - 2.0, z)), 0.0, 1.0);
+=======
+  vc = clamp(2.0 - vec3(abs(z - 4.0), abs(z - 2.0), abs(z)), 0.0, 1.0) * nv.z;
+>>>>>>> add normal
 
   gl_Position = mc * pv;
 }
