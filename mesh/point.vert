@@ -15,7 +15,7 @@ void main(void)
 {
   // ‹^—ƒJƒ‰[ˆ—
   float z = pv.z * 6.0 + 2.0;
-  vc = clamp(2.0 - abs(vec3(z - 4.0, z - 2.0, z)), 0.0, 1.0);
+  vc = clamp(2.0 - abs(vec3(z - 4.0, z - 2.0, z)), 0.0, 1.0) * nv.z;
 
   gl_Position = mc * pv;
 }
