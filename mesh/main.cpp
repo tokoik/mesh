@@ -48,18 +48,6 @@ int main()
 
   // 頂点位置
   GLfloat position[stacks][slices][3];
-  for (auto j = 0; j < stacks; ++j)
-  {
-    for (auto i = 0; i < slices; ++i)
-    {
-      const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
-      const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
-
-      position[j][i][0] = x;
-      position[j][i][1] = y;
-      position[j][i][2] = 0.0f;
-    }
-  }
 
   // 頂点配列オブジェクト
   GLuint vao;
@@ -108,12 +96,11 @@ int main()
     const auto pi(3.14159265f);
     for (auto j = 0; j < stacks; ++j)
     {
-      const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
-
       for (auto i = 0; i < slices; ++i)
       {
         const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
-        const auto r(sqrt(x * x + y * y) * 6.0f * pi);
+        const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
+        const auto r(hypot(x, y) * 6.0f * pi);
 
         position[j][i][0] = x;
         position[j][i][1] = y;
