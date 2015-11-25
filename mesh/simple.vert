@@ -38,11 +38,7 @@ void main(void)
 
   // ‹^—ƒJƒ‰[ˆ—
   float z = pv.z * 6.0 + 2.0;
-<<<<<<< d05bd765bea57a5877012d1b9284b09e37a95d52
   vec4 vc = clamp(2.0 - abs(vec4(z - 4.0, z - 2.0, z, 1.0)), 0.0, 1.0);
-=======
-  vec4 vc = clamp(2.0 - vec4(abs(z - 4.0), abs(z - 2.0), abs(z), 1.0), 0.0, 1.0);
->>>>>>> add shading
 
   // ‰A‰eŒvZ
   idiff = (max(dot(n, l), 0.0) * kdiff * ldiff + kamb * lamb) * vc;
