@@ -48,18 +48,6 @@ int main()
 
   // 頂点位置
   GLfloat position[stacks][slices][3];
-  for (auto j = 0; j < stacks; ++j)
-  {
-    for (auto i = 0; i < slices; ++i)
-    {
-      const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
-      const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
-
-      position[j][i][0] = x;
-      position[j][i][1] = y;
-      position[j][i][2] = 0.0f;
-    }
-  }
 
   // 頂点配列オブジェクト
   GLuint vao;
@@ -122,6 +110,28 @@ int main()
     // シェーダの指定
     glUseProgram(point);
     glUniformMatrix4fv(mcLoc, 1, GL_FALSE, (window.getMp() * window.getMv()).get());
+
+    // 頂点位置を格納する頂点バッファオブジェクトに頂点座標値を設定する
+    static auto frame(0);
+    const auto cycle(100);
+    const auto t(float(frame) / float(cycle));
+    const auto pi(3.14159265f);
+    for (auto j = 0; j < stacks; ++j)
+    {
+      for (auto i = 0; i < slices; ++i)
+      {
+        const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+        const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
+        const auto r(hypot(x, y) * 6.0f * pi);
+
+        position[j][i][0] = x;
+        position[j][i][1] = y;
+        position[j][i][2] = sin(r - 2.0f * pi * t) / (r + pi);
+      }
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof position, position);
+    if (++frame >= cycle) frame = 0;
 
     // 描画
     glBindVertexArray(vao);
