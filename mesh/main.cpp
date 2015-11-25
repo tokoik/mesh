@@ -74,15 +74,15 @@ int main()
 
   // このインデックスバッファオブジェクトにインデックスを格納する
   auto index(static_cast<GLuint *>(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY)));
-  for (auto v = 0; v < stacks - 1; ++v)
+  for (auto j = 0; j < stacks - 1; ++j)
   {
-    for (auto u = 0; u < slices - 1; ++u)
+    for (auto i = 0; i < slices - 1; ++i)
     {
-      const auto i(slices * v + u);
-      index[0] = i;
-      index[1] = index[5] = i + 1;
-      index[2] = index[4] = i + slices;
-      index[3] = i + slices + 1;
+      const auto k(slices * j + i);
+      index[0] = k;
+      index[1] = index[5] = k + 1;
+      index[2] = index[4] = k + slices;
+      index[3] = k + slices + 1;
       index += 6;
     }
   }
