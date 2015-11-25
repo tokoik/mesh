@@ -60,14 +60,11 @@ int main()
       position[j][i][2] = 0.0f;
     }
   }
-<<<<<<< 05502a496ed46f69312450d4ee61a199a82cc936
 
   // 頂点配列オブジェクト
   GLuint vao;
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
-=======
->>>>>>> add animation
 
   // 頂点位置を格納する頂点バッファオブジェクト
   GLuint positionBuffer;
