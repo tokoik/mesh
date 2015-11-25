@@ -48,16 +48,16 @@ int main()
 
   // ’¸“_ˆÊ’u
   GLfloat position[stacks][slices][3];
-  for (auto j = 0; j < stacks; ++j)
+  for (auto v = 0; v < stacks; ++v)
   {
-    for (auto i = 0; i < slices; ++i)
+    for (auto u = 0; u < slices; ++u)
     {
-      const auto x((GLfloat(i) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
-      const auto y((GLfloat(j) / GLfloat(stacks - 1) - 0.5f));
+      const auto x((GLfloat(u) / GLfloat(slices - 1) - 0.5f) * GLfloat(slices) / GLfloat(stacks));
+      const auto y((GLfloat(v) / GLfloat(stacks - 1) - 0.5f));
 
-      position[j][i][0] = x;
-      position[j][i][1] = y;
-      position[j][i][2] = 0.0f;
+      position[v][u][0] = x;
+      position[v][u][1] = y;
+      position[v][u][2] = 0.0f;
     }
   }
 
