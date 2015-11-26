@@ -46,6 +46,9 @@ int main()
   // 頂点位置
   GLfloat position[stacks][slices][3];
 
+  // 法線ベクトル
+  GLfloat normal[stacks][slices][3];
+
   // 頂点配列オブジェクト
   GLuint vao;
   glGenVertexArrays(1, &vao);
@@ -62,6 +65,18 @@ int main()
   // この頂点バッファオブジェクトを 0 番の attribute 変数から取り出す
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(0);
+
+  // 法線ベクトルを格納する頂点バッファオブジェクト
+  GLuint normalBuffer;
+  glGenBuffers(1, &normalBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+
+  // この頂点バッファオブジェクトのメモリを確保する
+  glBufferData(GL_ARRAY_BUFFER, sizeof normal, nullptr, GL_DYNAMIC_DRAW);
+
+  // この頂点バッファオブジェクトを 1 番の attribute 変数から取り出す
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(1);
 
   // インデックスバッファオブジェクト
   GLuint indexBuffer;
@@ -133,6 +148,52 @@ int main()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof position, position);
     if (++frame >= cycle) frame = 0;
 
+    // 法線ベクトルを格納する頂点バッファオブジェクトに法線ベクトルを設定する
+    for (auto j = 0; j < stacks; ++j)
+    {
+      for (auto i = 0; i < slices; ++i)
+      {
+        // i 方向の接線ベクトル
+        const auto i0(i > 0 ? i - 1 : 0);
+        const auto i1(i < slices - 1 ? i + 1 : slices - 1);
+        const GLfloat vi[] =
+        {
+          position[j][i1][0] - position[j][i0][0],
+          position[j][i1][1] - position[j][i0][1],
+          position[j][i1][2] - position[j][i0][2]
+        };
+
+        // j 方向の接線ベクトル
+        const auto j0(j > 0 ? j - 1 : 0);
+        const auto j1(j < stacks - 1 ? j + 1 : stacks - 1);
+        const GLfloat vj[] =
+        {
+          position[j1][i][0] - position[j0][i][0],
+          position[j1][i][1] - position[j0][i][1],
+          position[j1][i][2] - position[j0][i][2]
+        };
+
+        // 外積
+        normal[j][i][0] = vi[1] * vj[2] - vi[2] * vj[1];
+        normal[j][i][1] = vi[2] * vj[0] - vi[0] * vj[2];
+        normal[j][i][2] = vi[0] * vj[1] - vi[1] * vj[0];
+
+        //　正規化
+        const GLfloat nl(sqrt(
+          normal[j][i][0] * normal[j][i][0] +
+          normal[j][i][1] * normal[j][i][1] +
+          normal[j][i][2] * normal[j][i][2]));
+        if (nl > 0.0f)
+        {
+          normal[j][i][0] /= nl;
+          normal[j][i][1] /= nl;
+          normal[j][i][2] /= nl;
+        }
+      }
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof normal, normal);
+
     // 描画
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indexes, GL_UNSIGNED_INT, 0);
@@ -146,5 +207,6 @@ int main()
 
   // 頂点バッファオブジェクトを削除する
   glDeleteBuffers(1, &positionBuffer);
+  glDeleteBuffers(1, &normalBuffer);
   glDeleteBuffers(1, &indexBuffer);
 }
