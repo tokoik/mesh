@@ -38,10 +38,10 @@ void main(void)
 
   // 疑似カラー処理
   float z = pv.z * 6.0 + 2.0;
-  vec4 vc = clamp(2.0 - abs(vec4(z - 4.0, z - 2.0, z, 1.0)), 0.0, 1.0);
+  vec3 vc = clamp(vec3(z - 2.0, 2.0 - abs(z - 2.0), 2.0 - z), 0.0, 1.0);
 
   // 陰影計算
-  idiff = (max(dot(n, l), 0.0) * kdiff * ldiff + kamb * lamb) * vc;
+  idiff = (max(dot(n, l), 0.0) * kdiff * ldiff + kamb * lamb) * vec4(vc, 1.0);
   ispec = pow(max(dot(n, h), 0.0), kshi) * kspec * lspec;
 
   // クリッピング座標系における座標値
