@@ -103,6 +103,8 @@ int main()
   }
   glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 
+  GgQuaternion q0, q1;
+  
   // この頂点配列オブジェクトの結合を解除する
   glBindVertexArray(0);
 

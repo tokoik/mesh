@@ -3744,7 +3744,7 @@ namespace gg
     //!   \return a を引いた四元数.
     GgQuaternion &loadSubtract(const GLfloat *a)
     {
-      return loadSubtract(a);
+      return loadSubtract(a[0], a[1], a[2], a[3]);
     }
 
     //! \brief 四元数から別の四元数を減算した結果を格納する.
@@ -4229,9 +4229,9 @@ namespace gg
     //!   \return 四元数を a に対して t で内分した結果.
     GgQuaternion slerp(GLfloat *a, GLfloat t) const
     {
-      GgQuaternion q;
-      slerp(q.array, array, a, t);
-      return q;
+      GgQuaternion p;
+      slerp(p.array, array, a, t);
+      return p;
     }
 
     //! \brief 球面線形補間の結果を返す.
@@ -4240,7 +4240,9 @@ namespace gg
     //!   \return 四元数を q に対して t で内分した結果.
     GgQuaternion slerp(const GgQuaternion &q, GLfloat t) const
     {
-      return slerp(q.array, t);
+      GgQuaternion p;
+      slerp(p.array, array, q.array, t);
+      return p;
     }
 
     //! \brief 四元数のノルムを返す.
