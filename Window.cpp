@@ -1,166 +1,166 @@
-#include "Window.h"
+﻿#include "Window.h"
 
 //
-// �E�B���h�E�֘A�̏���
+// ウィンドウ関連の処理
 //
 
-// �W�����C�u����
+// 標準ライブラリ
 #include <cmath>
 
 //
-// �R���X�g���N�^
+// コンストラクタ
 //
 Window::Window(int width, int height, const char *title, GLFWmonitor *monitor, GLFWwindow *share)
   : window(glfwCreateWindow(width, height, title, monitor, share))
 {
-  // �E�B���h�E���J���Ă��Ȃ�������߂�
+  // ウィンドウが開いていなかったら戻る
   if (!window) return;
 
-  // ���݂̃E�B���h�E�������Ώۂɂ���
+  // 現在のウィンドウを処理対象にする
   glfwMakeContextCurrent(window);
 
-  // �Q�[���O���t�B�b�N�X���_�̓s���ɂ��ƂÂ����������s��
+  // ゲームグラフィックス特論の都合にもとづく初期化を行う
   ggInit();
 
-  // ���̃C���X�^���X�� this �|�C���^���L�^���Ă���
+  // このインスタンスの this ポインタを記録しておく
   glfwSetWindowUserPointer(window, this);
 
-  // �E�B���h�E�̃T�C�Y�ύX���ɌĂяo�������̓o�^
+  // ウィンドウのサイズ変更時に呼び出す処理の登録
   glfwSetFramebufferSizeCallback(window, resize);
 
-  // �}�E�X�{�^���𑀍삵���Ƃ��̏���
+  // マウスボタンを操作したときの処理
   glfwSetMouseButtonCallback(window, mouse);
 
-  // �}�E�X�z�C�[�����쎞�ɌĂяo������
+  // マウスホイール操作時に呼び出す処理
   glfwSetScrollCallback(window, wheel);
 
-  // �L�[�{�[�h�𑀍삵�����̏���
+  // キーボードを操作した時の処理
   glfwSetKeyCallback(window, keyboard);
 
-  // ���_�̏����ʒu��ݒ肷��
+  // 視点の初期位置を設定する
   eye[0] = objectCenter[0];
   eye[1] = objectCenter[1];
   eye[2] = objectCenter[2];
 
-  // �r���[�|�[�g�ƃv���W�F�N�V�����ϊ��s�������������
+  // ビューポートとプロジェクション変換行列を初期化する
   resize(window, width, height);
 }
 
 //
-// �f�X�g���N�^
+// デストラクタ
 //
 Window::~Window()
 {
-  // �E�B���h�E��j������
+  // ウィンドウを破棄する
   glfwDestroyWindow(window);
 }
 
 //
-// ��ʃN���A
+// 画面クリア
 //
-//   �E�}�`�̕`��J�n�O�ɌĂяo��
-//   �E��ʂ̏����Ȃǂ��s��
+//   ・図形の描画開始前に呼び出す
+//   ・画面の消去などを行う
 //
 void Window::clear()
 {
-  // �E�B���h�E�S�̂��r���[�|�[�g�ɂ���
+  // ウィンドウ全体をビューポートにする
   glViewport(0, 0, size[0], size[1]);
 
-  // �J���[�o�b�t�@�ƃf�v�X�o�b�t�@����������
+  // カラーバッファとデプスバッファを消去する
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 //
-// �J���[�o�b�t�@�����ւ��ăC�x���g�����o��
+// カラーバッファを入れ替えてイベントを取り出す
 //
-//   �E�}�`�̕`��I����ɌĂяo��
-//   �E�_�u���o�b�t�@�����O�̃o�b�t�@�̓���ւ����s��
-//   �E�L�[�{�[�h���쓙�̃C�x���g�����o��
+//   ・図形の描画終了後に呼び出す
+//   ・ダブルバッファリングのバッファの入れ替えを行う
+//   ・キーボード操作等のイベントを取り出す
 //
 void Window::swapBuffers()
 {
-  // �G���[�`�F�b�N
+  // エラーチェック
   ggError("SwapBuffers");
 
-  // �J���[�o�b�t�@�����ւ���
+  // カラーバッファを入れ替える
   glfwSwapBuffers(window);
 
-  // �C�x���g�����o��
+  // イベントを取り出す
   glfwPollEvents();
 
-  // ���{�^���h���b�O
+  // 左ボタンドラッグ
   if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1))
   {
-    // �}�E�X�̈ʒu�𒲂ׂ�
+    // マウスの位置を調べる
     double x, y;
     glfwGetCursorPos(window, &x, &y);
 
-    // ���_����]����
+    // 視点を回転する
     trackball.motion(float(x), float(y));
   }
 }
 
 //
-// �E�B���h�E�̃T�C�Y�ύX���̏���
+// ウィンドウのサイズ変更時の処理
 //
-//   �E�E�B���h�E�̃T�C�Y�ύX���ɃR�[���o�b�N�֐��Ƃ��ČĂяo�����
-//   �E�E�B���h�E�̍쐬���ɂ͖����I�ɌĂяo��
+//   ・ウィンドウのサイズ変更時にコールバック関数として呼び出される
+//   ・ウィンドウの作成時には明示的に呼び出す
 //
 void Window::resize(GLFWwindow *window, int width, int height)
 {
-  // ���̃C���X�^���X�� this �|�C���^�𓾂�
+  // このインスタンスの this ポインタを得る
   Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
   if (instance)
   {
-    // �v���W�F�N�V�����ϊ��s���ݒ肷��
+    // プロジェクション変換行列を設定する
     instance->mp = ggPerspective(cameraFovy, GLfloat(width) / GLfloat(height), cameraNear, cameraFar);
 
-    // �g���b�N�{�[�������͈̔͂�ݒ肷��
+    // トラックボール処理の範囲を設定する
     instance->trackball.region(width, height);
 
-    // �E�B���h�E�̕��ƍ�����ۑ����Ă���
+    // ウィンドウの幅と高さを保存しておく
     instance->size[0] = width;
     instance->size[1] = height;
 
-    // �E�B���h�E�S�̂��r���[�|�[�g�ɂ���
+    // ウィンドウ全体をビューポートにする
     glViewport(0, 0, width, height);
   }
 }
 
 //
-// �}�E�X�{�^���𑀍삵���Ƃ��̏���
+// マウスボタンを操作したときの処理
 //
-//   �E�}�E�X�{�^�����������Ƃ��ɃR�[���o�b�N�֐��Ƃ��ČĂяo�����
+//   ・マウスボタンを押したときにコールバック関数として呼び出される
 //
 void Window::mouse(GLFWwindow *window, int button, int action, int mods)
 {
-  // ���̃C���X�^���X�� this �|�C���^�𓾂�
+  // このインスタンスの this ポインタを得る
   Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
   if (instance)
   {
-    // �}�E�X�̌��݈ʒu�����o��
+    // マウスの現在位置を取り出す
     double x, y;
     glfwGetCursorPos(window, &x, &y);
 
     switch (button)
     {
     case GLFW_MOUSE_BUTTON_1:
-      // ���{�^�������������̏���
+      // 左ボタンを押した時の処理
       if (action)
       {
-        // �g���b�N�{�[�������J�n
+        // トラックボール処理開始
         instance->trackball.start(float(x), float(y));
       }
       else
       {
-        // �g���b�N�{�[�������I��
+        // トラックボール処理終了
         instance->trackball.stop(float(x), float(y));
       }
       break;
     case GLFW_MOUSE_BUTTON_2:
-      // �E�{�^�������������̏���
+      // 右ボタンを押した時の処理
       break;
     case GLFW_MOUSE_BUTTON_3:
       break;
@@ -172,45 +172,45 @@ void Window::mouse(GLFWwindow *window, int button, int action, int mods)
 }
 
 //
-// �}�E�X�z�C�[�����쎞�̏���
+// マウスホイール操作時の処理
 //
-//   �E�}�E�X�z�C�[���𑀍삵�����ɃR�[���o�b�N�֐��Ƃ��ČĂяo�����
+//   ・マウスホイールを操作した時にコールバック関数として呼び出される
 //
 void Window::wheel(GLFWwindow *window, double x, double y)
 {
-  // ���̃C���X�^���X�� this �|�C���^�𓾂�
+  // このインスタンスの this ポインタを得る
   Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
   if (instance)
   {
-    // ���_��O��Ɉړ�����
+    // 視点を前後に移動する
     instance->eye[2] -= GLfloat(motionFactor[2] * (fabs(instance->eye[2]) + 1.0) * y);
   }
 }
 
 //
-// �L�[�{�[�h���^�C�v�������̏���
+// キーボードをタイプした時の処理
 //
-//   �D�L�[�{�[�h���^�C�v�������ɃR�[���o�b�N�֐��Ƃ��ČĂяo�����
+//   ．キーボードをタイプした時にコールバック関数として呼び出される
 //
 void Window::keyboard(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-  // ���̃C���X�^���X�� this �|�C���^�𓾂�
+  // このインスタンスの this ポインタを得る
   Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
 
   if (instance)
   {
     if (action == GLFW_PRESS)
     {
-      // �L�[�{�[�h����ɂ�鏈��
+      // キーボード操作による処理
       switch (key)
       {
       case GLFW_KEY_R:
-        // ���_�̉�]�����Z�b�g����
+        // 視点の回転をリセットする
         instance->trackball.reset();
         break;
       case GLFW_KEY_T:
-        //���_�̈ʒu�����Z�b�g����
+        //視点の位置をリセットする
         instance->eye[0] = objectCenter[0];
         instance->eye[1] = objectCenter[1];
         instance->eye[2] = objectCenter[2];

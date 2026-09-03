@@ -1,93 +1,93 @@
-//
-// ƒƒbƒVƒ…‚ðŽg‚Á‚½}Œ`•`‰æ‚ÌƒTƒ“ƒvƒ‹
+ï»¿//
+// ãƒ¡ãƒƒã‚·ãƒ¥ã‚’ä½¿ã£ãŸå›³å½¢æç”»ã®ã‚µãƒ³ãƒ—ãƒ«
 //
 
-// •W€ƒ‰ƒCƒuƒ‰ƒŠ
+// æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 #include <iostream>
 #include <cmath>
 
-// ƒEƒBƒ“ƒhƒEŠÖ˜A‚Ìˆ—
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£ã®å‡¦ç†
 #include "Window.h"
 
-// ƒƒbƒVƒ…‚Ì—ñ”‚Æs”
+// ãƒ¡ãƒƒã‚·ãƒ¥ã®åˆ—æ•°ã¨è¡Œæ•°
 const auto slices(160), stacks(120);
 
 //
-// ƒƒCƒ“ƒvƒƒOƒ‰ƒ€
+// ãƒ¡ã‚¤ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 //
 int main()
 {
-  // GLFW ‚ð‰Šú‰»‚·‚é
+  // GLFW ã‚’åˆæœŸåŒ–ã™ã‚‹
   if (glfwInit() == GL_FALSE)
   {
-    // GLFW ‚Ì‰Šú‰»‚ÉŽ¸”s‚µ‚½
+    // GLFW ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ãŸ
     std::cerr << "Failed to initialize GLFW." << std::endl;
     return EXIT_FAILURE;
   }
 
-  // ƒvƒƒOƒ‰ƒ€I—¹Žž‚É‚Í GLFW ‚ðI—¹‚·‚é
+  // ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†æ™‚ã«ã¯ GLFW ã‚’çµ‚äº†ã™ã‚‹
   atexit(glfwTerminate);
 
-  // OpenGL Version 3.2 Core Profile ‚ð‘I‘ð‚·‚é
+  // OpenGL Version 3.2 Core Profile ã‚’é¸æŠžã™ã‚‹
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  // ƒEƒBƒ“ƒhƒE‚ðŠJ‚­
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã
   Window window(640, 480, "Mesh Sample");
   if (!window.get())
   {
-    // ƒEƒBƒ“ƒhƒE‚ªì¬‚Å‚«‚È‚©‚Á‚½
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã§ããªã‹ã£ãŸ
     std::cerr << "Can't open GLFW window." << std::endl;
     return EXIT_FAILURE;
   }
 
-  // ’¸“_ˆÊ’u
+  // é ‚ç‚¹ä½ç½®
   GLfloat position[stacks][slices][3];
 
-  // –@üƒxƒNƒgƒ‹
+  // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
   GLfloat normal[stacks][slices][3];
 
-  // ’¸“_”z—ñƒIƒuƒWƒFƒNƒg
+  // é ‚ç‚¹é…åˆ—ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
   GLuint vao;
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
 
-  // ’¸“_ˆÊ’u‚ðŠi”[‚·‚é’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg
+  // é ‚ç‚¹ä½ç½®ã‚’æ ¼ç´ã™ã‚‹é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
   GLuint positionBuffer;
   glGenBuffers(1, &positionBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
 
-  // ‚±‚Ì’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚Ìƒƒ‚ƒŠ‚ðŠm•Û‚·‚é
+  // ã“ã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã™ã‚‹
   glBufferData(GL_ARRAY_BUFFER, sizeof position, nullptr, GL_DYNAMIC_DRAW);
 
-  // ‚±‚Ì’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ð 0 ”Ô‚Ì attribute •Ï”‚©‚çŽæ‚èo‚·
+  // ã“ã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ 0 ç•ªã® attribute å¤‰æ•°ã‹ã‚‰å–ã‚Šå‡ºã™
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(0);
 
-  // –@üƒxƒNƒgƒ‹‚ðŠi”[‚·‚é’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg
+  // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æ ¼ç´ã™ã‚‹é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
   GLuint normalBuffer;
   glGenBuffers(1, &normalBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 
-  // ‚±‚Ì’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚Ìƒƒ‚ƒŠ‚ðŠm•Û‚·‚é
+  // ã“ã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã™ã‚‹
   glBufferData(GL_ARRAY_BUFFER, sizeof normal, nullptr, GL_DYNAMIC_DRAW);
 
-  // ‚±‚Ì’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ð 1 ”Ô‚Ì attribute •Ï”‚©‚çŽæ‚èo‚·
+  // ã“ã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ 1 ç•ªã® attribute å¤‰æ•°ã‹ã‚‰å–ã‚Šå‡ºã™
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(1);
 
-  // ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg
+  // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
   GLuint indexBuffer;
   glGenBuffers(1, &indexBuffer);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-  // ‚±‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚Ìƒƒ‚ƒŠ‚ðŠm•Û‚·‚é
+  // ã“ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã™ã‚‹
   const auto indexes((slices - 1) * (stacks - 1) * 2 * 3);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes * sizeof (GLuint), nullptr, GL_STATIC_DRAW);
 
-  // ‚±‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ÉƒCƒ“ƒfƒbƒNƒX‚ðŠi”[‚·‚é
+  // ã“ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’æ ¼ç´ã™ã‚‹
   auto index(static_cast<GLuint *>(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY)));
   for (auto j = 0; j < stacks - 1; ++j)
   {
@@ -103,31 +103,31 @@ int main()
   }
   glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 
-  // ‚±‚Ì’¸“_”z—ñƒIƒuƒWƒFƒNƒg‚ÌŒ‹‡‚ð‰ðœ‚·‚é
+  // ã“ã®é ‚ç‚¹é…åˆ—ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®çµåˆã‚’è§£é™¤ã™ã‚‹
   glBindVertexArray(0);
 
-  // ƒƒbƒVƒ…•`‰æ—p‚ÌƒVƒF[ƒ_
+  // ãƒ¡ãƒƒã‚·ãƒ¥æç”»ç”¨ã®ã‚·ã‚§ãƒ¼ãƒ€
   GgSimpleShader simple("simple.vert", "simple.frag");
 
-  // ”wŒiF‚ðÝ’è‚·‚é
+  // èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
   glClearColor(background[0], background[1], background[2], background[3]);
 
-  // ‰B–ÊÁ‹Žˆ—‚ð—LŒø‚É‚·‚é
+  // éš é¢æ¶ˆåŽ»å‡¦ç†ã‚’æœ‰åŠ¹ã«ã™ã‚‹
   glEnable(GL_DEPTH_TEST);
 
-  // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¢‚Ä‚¢‚éŠÔ‚­‚è•Ô‚µ•`‰æ‚·‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‹ã„ã¦ã„ã‚‹é–“ãã‚Šè¿”ã—æç”»ã™ã‚‹
   while (!window.shouldClose())
   {
-    // ‰æ–ÊÁ‹Ž
+    // ç”»é¢æ¶ˆåŽ»
     window.clear();
 
-    // ƒVƒF[ƒ_‚ÌŽw’è
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®æŒ‡å®š
     simple.use();
     simple.setLight(light);
     simple.setMaterial(material);
     simple.loadMatrix(window.getMp(), window.getMv());
 
-    // ’¸“_ˆÊ’u‚ðŠi”[‚·‚é’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚É’¸“_À•W’l‚ðÝ’è‚·‚é
+    // é ‚ç‚¹ä½ç½®ã‚’æ ¼ç´ã™ã‚‹é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«é ‚ç‚¹åº§æ¨™å€¤ã‚’è¨­å®šã™ã‚‹
     static auto frame(0);
     const auto cycle(100);
     const auto t(float(frame) / float(cycle));
@@ -149,12 +149,12 @@ int main()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof position, position);
     if (++frame >= cycle) frame = 0;
 
-    // –@üƒxƒNƒgƒ‹‚ðŠi”[‚·‚é’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚É–@üƒxƒNƒgƒ‹‚ðÝ’è‚·‚é
+    // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æ ¼ç´ã™ã‚‹é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨­å®šã™ã‚‹
     for (auto j = 0; j < stacks; ++j)
     {
       for (auto i = 0; i < slices; ++i)
       {
-        // i •ûŒü‚ÌÚüƒxƒNƒgƒ‹
+        // i æ–¹å‘ã®æŽ¥ç·šãƒ™ã‚¯ãƒˆãƒ«
         const auto i0(i > 0 ? i - 1 : 0);
         const auto i1(i < slices - 1 ? i + 1 : slices - 1);
         const GLfloat vi[] =
@@ -164,7 +164,7 @@ int main()
           position[j][i1][2] - position[j][i0][2]
         };
 
-        // j •ûŒü‚ÌÚüƒxƒNƒgƒ‹
+        // j æ–¹å‘ã®æŽ¥ç·šãƒ™ã‚¯ãƒˆãƒ«
         const auto j0(j > 0 ? j - 1 : 0);
         const auto j1(j < stacks - 1 ? j + 1 : stacks - 1);
         const GLfloat vj[] =
@@ -174,12 +174,12 @@ int main()
           position[j1][i][2] - position[j0][i][2]
         };
 
-        // ŠOÏ
+        // å¤–ç©
         normal[j][i][0] = vi[1] * vj[2] - vi[2] * vj[1];
         normal[j][i][1] = vi[2] * vj[0] - vi[0] * vj[2];
         normal[j][i][2] = vi[0] * vj[1] - vi[1] * vj[0];
 
-        //@³‹K‰»
+        //ã€€æ­£è¦åŒ–
         const GLfloat nl(sqrt(
           normal[j][i][0] * normal[j][i][0] +
           normal[j][i][1] * normal[j][i][1] +
@@ -195,18 +195,18 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof normal, normal);
 
-    // •`‰æ
+    // æç”»
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indexes, GL_UNSIGNED_INT, 0);
 
-    // ƒoƒbƒtƒ@‚ð“ü‚ê‘Ö‚¦‚é
+    // ãƒãƒƒãƒ•ã‚¡ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
     window.swapBuffers();
   }
 
-  // ’¸“_”z—ñƒIƒuƒWƒFƒNƒg‚ðíœ‚·‚é
+  // é ‚ç‚¹é…åˆ—ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤ã™ã‚‹
   glDeleteVertexArrays(1, &vao);
 
-  // ’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ðíœ‚·‚é
+  // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤ã™ã‚‹
   glDeleteBuffers(1, &positionBuffer);
   glDeleteBuffers(1, &normalBuffer);
   glDeleteBuffers(1, &indexBuffer);
